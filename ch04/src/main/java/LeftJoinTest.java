@@ -96,5 +96,11 @@ public class LeftJoinTest {
         });
 
         System.out.println(tuple3._1 / (double)tuple3._2);
+
+        Tuple2<Integer, Integer> tuple4 = javaRDD.aggregate(new Tuple2<>(0, 0), (t, x) ->
+                                                            new Tuple2(t._1 + x, t._2 + 1), (t, x) ->
+                                                            new Tuple2(t._1 + x._1, t._2 + x._2));
+        System.out.println(tuple4._1 / (double)tuple4._2);
+
     }
 }

@@ -41,5 +41,10 @@ public class AggreateTest {
         });
 
         System.out.println(res.avg());
+
+        AvgCount res1 = rdd.aggregate(new AvgCount(0, 0), (AvgCount acc, Integer x) ->
+                      new AvgCount(acc.total + x, acc.num + 1),(AvgCount left, AvgCount right) ->
+                      new AvgCount(left.total + right.total, left.num + right.num));
+        System.out.println(res1.avg());
     }
 }
