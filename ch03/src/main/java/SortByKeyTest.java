@@ -23,6 +23,8 @@ public class SortByKeyTest {
 
         pair.sortByKey().foreach(x -> System.out.println(x));
 
-        pair.sortByKey((x, y) -> String.valueOf(x).compareTo(String.valueOf(y))).foreach(x -> System.out.println(x));
+//        pair.sortByKey((x, y) -> String.valueOf(x).compareTo(String.valueOf(y))).foreach(x -> System.out.println(x));
+
+        pair.lookup(5).forEach(x -> System.out.println(x));
     }
 }
