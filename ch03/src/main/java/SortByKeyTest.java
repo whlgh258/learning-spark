@@ -1,8 +1,10 @@
 import java.util.Arrays;
 
+import org.apache.spark.HashPartitioner;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.storage.StorageLevel;
 import scala.Tuple2;
 
 /**
@@ -26,5 +28,9 @@ public class SortByKeyTest {
 //        pair.sortByKey((x, y) -> String.valueOf(x).compareTo(String.valueOf(y))).foreach(x -> System.out.println(x));
 
         pair.lookup(5).forEach(x -> System.out.println(x));
+
+        JavaPairRDD<Integer, Integer> partitionedPair = pair.partitionBy(new HashPartitioner(10)).persist(StorageLevel.MEMORY_ONLY());
+        System.out.println(partitionedPair.partitions().size());
+        System.out.println(partitionedPair.partitioner().get());
     }
 }
