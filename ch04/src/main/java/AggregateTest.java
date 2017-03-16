@@ -45,7 +45,5 @@ public class AggregateTest {
 
         JavaRDD avg = result.map(x -> new Tuple2(x._1, x._2._1 / (double) x._2._2));
         avg.foreach(x -> System.out.println(x));
-
-
     }
 }
