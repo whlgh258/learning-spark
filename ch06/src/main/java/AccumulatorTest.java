@@ -17,7 +17,7 @@ public class AccumulatorTest {
         JavaSparkContext jsc = new JavaSparkContext(conf);
         jsc.setLogLevel("warn");
 
-        MyAccumulatorV2 myAccumulatorV2 = new MyAccumulatorV2();
+        MyAccumulatorV2 myAccumulatorV2 = new MyAccumulatorV2(0);
         jsc.sc().register(myAccumulatorV2);
 
         JavaRDD<String> rdd = jsc.textFile(args[1]);
@@ -32,44 +32,4 @@ public class AccumulatorTest {
         callSigns.saveAsTextFile("output.txt");
         System.out.println("Blank lines: "+ myAccumulatorV2.value());
     }
-}
-
-class MyAccumulatorV2 extends AccumulatorV2<Integer, Integer> {
-    private Integer accumulator;
-
-    @Override
-    public boolean isZero() {
-        return accumulator == 0;
-    }
-
-    @Override
-    public AccumulatorV2<Integer,Integer> copy() {
-        MyAccumulatorV2 other = new MyAccumulatorV2();
-        other.accumulator = this.accumulator;
-        return other;
-    }
-
-    @Override
-    public void reset() {
-        this.accumulator = 0;
-    }
-
-    @Override
-    public void merge(AccumulatorV2<Integer, Integer> accumulatorV2) {
-        if(accumulatorV2 instanceof MyAccumulatorV2){
-            MyAccumulatorV2 o = (MyAccumulatorV2) accumulatorV2;
-            this.accumulator += o.accumulator;
-        }
-    }
-
-    @Override
-    public void add(Integer integer) {
-        this.accumulator += integer;
-    }
-
-    @Override
-    public Integer value() {
-        return this.accumulator;
-    }
-
 }
