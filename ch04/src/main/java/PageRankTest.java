@@ -71,6 +71,7 @@ public class PageRankTest {
 
         rank.foreach(x -> System.out.println(x));*/
 
+        // 匿名类，用的mapToPair
         /*for(int i = 0; i < 10; i++){
             JavaPairRDD<String, Tuple2<List<String>, Double>> result = pair.join(rank);
             JavaRDD<Tuple2<String, Tuple2<String, Double>>> flatJavaRDD = result.flatMap(new FlatMapFunction<Tuple2<String,Tuple2<List<String>,Double>>, Tuple2<String, Tuple2<String, Double>>>() {
@@ -100,7 +101,7 @@ public class PageRankTest {
 
         rank.foreach(x -> System.out.println(x));*/
 
-        // 匿名类
+        // lambda表达式，用的flatMapToPair，应该用mapToPair，但不影响结果
         /*for(int i = 0; i < 10; i++){
             JavaPairRDD<String, Tuple2<List<String>, Double>> result = pair.join(rank);
             JavaRDD<Tuple2<String, Tuple2<String, Double>>> flatJavaRDD = result.flatMap(x -> {
@@ -127,7 +128,7 @@ public class PageRankTest {
 
         rank.foreach(x -> System.out.println(x));*/
 
-        // lambda表达式
+        // lambda表达式，用的mapToPair
         /*for(int i = 0; i < 10; i++){
             JavaPairRDD<String, Tuple2<List<String>, Double>> result = pair.join(rank);
             JavaRDD<Tuple2<String, Tuple2<String, Double>>> flatJavaRDD = result.flatMap(x -> {
