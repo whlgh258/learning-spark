@@ -10,6 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ch06</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty.aggregate</groupId>
+            <artifactId>jetty-all</artifactId>
+            <version>7.6.0.v20120127</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
