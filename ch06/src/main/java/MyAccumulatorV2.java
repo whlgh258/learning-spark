@@ -7,7 +7,7 @@ public class MyAccumulatorV2 extends AccumulatorV2<Integer, Integer> {
     private Integer accumulator;
 
     public MyAccumulatorV2(){
-
+        this.accumulator = 0;
     }
 
     public MyAccumulatorV2(Integer accumulator){
