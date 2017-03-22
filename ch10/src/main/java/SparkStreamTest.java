@@ -1,17 +1,8 @@
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
-import org.apache.hadoop.mapred.SequenceFileOutputFormat;
+import org.apache.hadoop.mapred.OutputFormat;
 import org.apache.hadoop.mapreduce.InputFormat;
-import org.apache.hadoop.mapreduce.JobContext;
-import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.Optional;
 import org.apache.spark.streaming.Duration;
@@ -61,26 +52,13 @@ public class SparkStreamTest {
 
         ipAddressRequestCount.saveAsHadoopFiles("", "");
         JavaPairDStream<Text, LongWritable> writableDStream = ipAddressRequestCount.mapToPair(x -> new Tuple2<>(new Text(x._1), new LongWritable(x._2)));
-        writableDStream.saveAsHadoopFiles("", "", Text.class, LongWritable.class, OutFormat.class);
+        writableDStream.saveAsHadoopFiles("", "", Text.class, LongWritable.class, OutputFormat.class);
 
         ipAddressRequestCount.foreachRDD(x -> x.foreachPartition(y -> y.forEachRemaining(z -> System.out.println(z._1 + ": " + z._2))));
 
         JavaDStream<String> log = jssc.textFileStream("");
-        jssc.fileStream("", Text.class, IntWritable.class, MyInputFormat.class);
+        jssc.fileStream("", Text.class, IntWritable.class, InputFormat.class);
 
     }
 
-    class OutFormat extends SequenceFileOutputFormat<Text, LongWritable> {};
-
-    class MyInputFormat extends InputFormat<Text, IntWritable> {
-        @Override
-        public List<org.apache.hadoop.mapreduce.InputSplit> getSplits(JobContext jobContext) throws IOException, InterruptedException {
-            return null;
-        }
-
-        @Override
-        public org.apache.hadoop.mapreduce.RecordReader<Text, IntWritable> createRecordReader(org.apache.hadoop.mapreduce.InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
-            return null;
-        }
-    };
 }

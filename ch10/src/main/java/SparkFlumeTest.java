@@ -1,4 +1,5 @@
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.function.Function0;
 import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -17,5 +18,13 @@ public class SparkFlumeTest {
         String receiverHostname = args[0];
         int receiverPort = Integer.parseInt(args[1]);
         JavaDStream<SparkFlumeEvent> events = FlumeUtils.createStream(jssc, receiverHostname, receiverPort);
+
+        JavaDStream<SparkFlumeEvent> events1 = FlumeUtils.createPollingStream(jssc, receiverHostname, receiverPort);
+
+        JavaDStream<String> lines = events.map(e -> new String(e.event().getBody().array(), "utf-8"));
+
+        JavaStreamingContext javaStreamingContext = JavaStreamingContext.getOrCreate("", () -> new JavaStreamingContext(conf, new Duration(10000)));
+
+
     }
 }
