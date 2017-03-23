@@ -1,13 +1,17 @@
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.mllib.classification.LogisticRegressionModel;
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS;
 import org.apache.spark.mllib.feature.HashingTF;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.regression.LabeledPoint;
+import scala.Tuple2;
 
 /**
  * Created by wanghl on 17-3-22.
@@ -37,5 +41,6 @@ public class SpamEmailTest {
 
         System.out.println("Prediction for positive example: " + model.predict(posTest));
         System.out.println("Prediction for negative example: " + model.predict(negTest));
+
     }
 }
