@@ -11,6 +11,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FlatMapFunction;
 import scala.Tuple2;
 
 /**
@@ -55,8 +56,8 @@ public class CSVTest {
             writer.writeAll(list);
         });*/
 
-        /*JavaPairRDD<String, Integer> data = jsc.parallelizePairs(Arrays.asList(new Tuple2<String, Integer>("Panda", 3), new Tuple2<String, Integer>("Kay", 6), new Tuple2<String, Integer>("Snail", 2)));
-        data.map(x -> Arrays.asList(x._1, x._2).toArray()).mapPartitions(String[] x -> {
+        JavaPairRDD<String, Integer> data = jsc.parallelizePairs(Arrays.asList(new Tuple2<String, Integer>("Panda", 3), new Tuple2<String, Integer>("Kay", 6), new Tuple2<String, Integer>("Snail", 2)));
+        /*data.map(x -> Arrays.asList(x._1, x._2).toArray()).mapPartitions(String[] x -> {
             StringWriter sw = new StringWriter();
             CSVWriter writer = new CSVWriter(sw);
             List<String[]> list = new ArrayList<>();
